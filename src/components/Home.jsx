@@ -35,16 +35,7 @@ const Home = () => {
               max-w-md
             "
           >
-            <span
-              className="
-                inline-block mb-4 px-5 py-2 rounded-full
-                bg-yellow-400/10 border border-yellow-400/30
-                text-yellow-300 font-semibold text-sm
-              "
-            >
-  
-            </span>
-
+            
             <h1 className="text-5xl lg:text-6xl font-bold mb-4 bg-gradient-to-r from-yellow-300 via-blue-400 to-indigo-400 bg-clip-text text-transparent">
               Anushree Jain
             </h1>
@@ -74,12 +65,12 @@ const Home = () => {
             </div>
           </motion.div>
 
-          {/* ===== RIGHT : CIRCULAR IMAGE (FINAL) ===== */}
+          {/* ===== RIGHT : IMAGE + QUOTE ===== */}
           <motion.div
             initial={{ opacity: 0, scale: 0.95 }}
             animate={{ opacity: 1, scale: 1 }}
             transition={{ duration: 1 }}
-            className="flex justify-center items-center lg:ml-6"
+            className="flex flex-col items-center lg:ml-6"
           >
             <div className="relative w-[420px] h-[420px] flex items-center justify-center">
 
@@ -100,8 +91,15 @@ const Home = () => {
                   className="w-full h-full object-cover"
                 />
               </div>
-
             </div>
+
+            {/* ===== QUOTE UNDER PHOTO ===== */}
+            <p className="mt-6 max-w-md text-center text-sm text-gray-300 italic leading-relaxed">
+              “You are what you believe in. You become that which you believe you can become.”
+              <span className="not-italic text-yellow-300 ml-2">
+                — Shri Krishna
+              </span>
+            </p>
           </motion.div>
 
         </div>

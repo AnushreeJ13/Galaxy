@@ -104,25 +104,7 @@ const CosmicNav = ({ activePlanet }) => {
       </div>
 
       {/* ===== QUOTE BAR (BOTTOM) ===== */}
-      <motion.div
-        className="
-          fixed bottom-6 left-1/2 -translate-x-1/2 z-40
-          backdrop-blur-md bg-black/50
-          px-6 py-3 rounded-full
-          border border-yellow-400/20
-          shadow-xl
-        "
-        initial={{ y: 40, opacity: 0 }}
-        animate={{ y: 0, opacity: 1 }}
-        transition={{ duration: 1 }}
-      >
-        <p className="text-xs md:text-sm text-yellow-200/80 italic text-center">
-          “You are what you believe in. You become that which you believe you can become.”
-          <span className="not-italic text-yellow-300 ml-2">
-            — Shri Krishna
-          </span>
-        </p>
-      </motion.div>
+      
     </>
   );
 };
