@@ -22,33 +22,8 @@ const DivineHand = () => {
           transition={{ duration: 4, repeat: Infinity }}
         />
         
-        {/* Hand Image */}
-        <motion.img
-          src="https://cdn-icons-png.flaticon.com/512/2098/2098317.png"
-          alt="Divine Hand"
-          className="w-32 h-32 filter invert brightness-0 saturate-100 hue-rotate-60"
-          animate={{
-            y: [0, -10, 0],
-            rotate: [0, 5, -5, 0],
-          }}
-          transition={{ duration: 5, repeat: Infinity }}
-        />
-        
-        {/* Blessing Light */}
-        <motion.div 
-          className="absolute -bottom-4 left-1/2 transform -translate-x-1/2 w-2 h-20 bg-gradient-to-b from-yellow-400 to-transparent"
-          animate={{ height: ['20px', '40px', '20px'] }}
-          transition={{ duration: 2, repeat: Infinity }}
-        />
-        
-        {/* Blessing Text */}
-        <motion.div 
-          className="absolute -bottom-16 left-1/2 transform -translate-x-1/2 text-yellow-300 font-bold text-sm whitespace-nowrap"
-          animate={{ opacity: [0.5, 1, 0.5] }}
-          transition={{ duration: 2, repeat: Infinity }}
-        >
-          Divine Blessings 🙏
-        </motion.div>
+       
+       
       </div>
     </motion.div>
   );

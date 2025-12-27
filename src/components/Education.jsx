@@ -10,7 +10,7 @@ const Education = () => {
       institution: "Indira Gandhi Delhi Technical University for Women",
       degree: "B.Tech - Computer Science & Engineering (AI)",
       year: "2023 - 2027",
-      grade: "CGPA: 9.66",
+      grade: "CGPA: 9.73",
       icon: <FaUniversity />,
       color: "from-emerald-500 to-green-600",
       achievements: [
@@ -184,7 +184,7 @@ const Education = () => {
                           whileHover={{ scale: 1.1, y: -3 }}
                           className="px-3 py-1 rounded-full bg-gradient-to-r from-emerald-500/20 to-green-500/20 border border-emerald-500/30 text-emerald-200 text-sm"
                         >
-                          {achievement}
+                        
                         </motion.span>
                       ))}
                     </div>
@@ -220,63 +220,10 @@ const Education = () => {
         </div>
         
         {/* Additional Stats */}
-        <motion.div
-          initial={{ opacity: 0, y: 50 }}
-          whileInView={{ opacity: 1, y: 0 }}
-          transition={{ duration: 0.8 }}
-          viewport={{ once: true }}
-          className="mt-20 backdrop-blur-xl bg-black/30 p-8 rounded-3xl border border-emerald-500/20"
-        >
-          <h3 className="text-3xl font-bold text-center text-emerald-300 mb-8">Academic Excellence</h3>
-          
-          <div className="grid grid-cols-1 md:grid-cols-3 gap-8">
-            {[
-              { label: "Overall CGPA", value: "9.66", color: "from-emerald-500 to-green-500" },
-              { label: "Projects Completed", value: "24+", color: "from-teal-500 to-cyan-500" },
-              { label: "Certifications", value: "15+", color: "from-green-500 to-emerald-500" },
-            ].map((stat, index) => (
-              <motion.div
-                key={stat.label}
-                initial={{ opacity: 0, scale: 0 }}
-                whileInView={{ opacity: 1, scale: 1 }}
-                transition={{ delay: index * 0.2 }}
-                viewport={{ once: true }}
-                whileHover={{ scale: 1.05, y: -10 }}
-                className="text-center p-6 rounded-2xl bg-gradient-to-br from-emerald-500/10 to-green-500/10 border border-emerald-500/20"
-              >
-                <div className={`text-5xl font-bold bg-gradient-to-r ${stat.color} bg-clip-text text-transparent mb-4`}>
-                  {stat.value}
-                </div>
-                <div className="text-emerald-200 text-lg font-semibold">{stat.label}</div>
-              </motion.div>
-            ))}
-          </div>
-        </motion.div>
+        
+       
       </div>
       
-      {/* Floating books */}
-      {[...Array(8)].map((_, i) => (
-        <motion.div
-          key={i}
-          className="absolute text-3xl"
-          style={{
-            left: `${Math.random() * 100}%`,
-            top: `${Math.random() * 100}%`,
-          }}
-          animate={{
-            y: [0, -100],
-            rotate: [0, 360],
-            opacity: [0, 1, 0],
-          }}
-          transition={{
-            duration: 5 + Math.random() * 5,
-            repeat: Infinity,
-            delay: i * 1.5,
-          }}
-        >
-          📚
-        </motion.div>
-      ))}
     </section>
   );
 };
