@@ -20,7 +20,7 @@ const Experience = () => {
           </span>
 
           <h2 className="text-4xl font-semibold text-[#f5f3ee]">
-            My Karma
+            My Journey
           </h2>
 
           <div className="w-16 h-[1px] bg-[#e8dcc4] mx-auto mt-8 opacity-70" />

@@ -42,7 +42,7 @@ const Home = () => {
                 text-yellow-300 font-semibold text-sm
               "
             >
-              Guided by Calm • Built with Code
+  
             </span>
 
             <h1 className="text-5xl lg:text-6xl font-bold mb-4 bg-gradient-to-r from-yellow-300 via-blue-400 to-indigo-400 bg-clip-text text-transparent">

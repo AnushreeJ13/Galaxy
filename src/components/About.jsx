@@ -1,6 +1,5 @@
 import React, { useRef, useState } from "react";
 import { motion } from "framer-motion";
-import aboutImage from "../assets/about.jpg";
 
 const About = () => {
   const containerRef = useRef(null);
@@ -14,7 +13,6 @@ I focus on writing maintainable code, learning continuously,
 and creating products that feel simple, thoughtful, and reliable.
 `;
 
-  // 🔹 Compact grouped stack
   const techStack = {
     Frontend: ["HTML", "CSS", "JavaScript", "React", "Tailwind CSS"],
     Backend: ["MongoDB", "Firebase"],
@@ -27,9 +25,9 @@ and creating products that feel simple, thoughtful, and reliable.
       ref={containerRef}
       id="about"
       className="
-        min-h-screen relative flex items-center justify-center
+        relative flex items-center justify-center
         bg-gradient-to-b from-black via-indigo-950 to-black
-        py-24 overflow-hidden
+        py-20 overflow-hidden min-h-fit
       "
       onMouseMove={(e) => {
         if (!containerRef.current) return;
@@ -59,7 +57,7 @@ and creating products that feel simple, thoughtful, and reliable.
           whileInView={{ opacity: 1, y: 0 }}
           transition={{ duration: 0.8 }}
           viewport={{ once: true }}
-          className="text-center mb-16"
+          className="text-center mb-14"
         >
           <span
             className="
@@ -75,65 +73,31 @@ and creating products that feel simple, thoughtful, and reliable.
             className="
               text-5xl lg:text-6xl font-bold
               bg-gradient-to-r from-yellow-300 via-blue-400 to-indigo-400
-              bg-clip-text text-transparent mb-5
+              bg-clip-text text-transparent mb-4
             "
           >
             Who I Am
           </h2>
 
-          <div className="w-28 h-1 mx-auto rounded-full bg-gradient-to-r from-yellow-400 to-blue-400" />
+          <p className="text-yellow-100/70 text-lg mt-2">
+            Build. Learn. Evolve.
+          </p>
+
+          <div className="w-24 h-1 mx-auto mt-5 rounded-full bg-gradient-to-r from-yellow-400 to-blue-400" />
         </motion.div>
 
-        <div className="grid grid-cols-1 lg:grid-cols-2 gap-14 items-center">
-          {/* Image */}
-          {/* Image */}
-<motion.div
-  initial={{ opacity: 0, x: -30 }}
-  whileInView={{ opacity: 1, x: 0 }}
-  transition={{ duration: 1 }}
-  viewport={{ once: true }}
-  className="flex justify-center"
->
-  <div className="relative w-[380px] h-[380px] flex items-center justify-center">
-    
-    {/* 🌕 Yellow Ring (bigger) */}
-    <div
-      className="
-        absolute
-        w-[380px] h-[380px]
-        rounded-3xl
-        border-[3px] border-yellow-400/60
-        shadow-[0_0_50px_rgba(250,204,21,0.25)]
-      "
-    />
-
-    {/* 🖼 Photo (slightly smaller, on top of ring) */}
-    <motion.div
-      className="relative w-[340px] h-[340px] rounded-3xl overflow-hidden z-10"
-      style={{
-        transform: `translateY(${mousePosition.y / 40}px)`,
-      }}
-      transition={{ type: "spring", stiffness: 120, damping: 20 }}
-    >
-      <img
-        src={aboutImage}
-        alt="About"
-        className="w-full h-full object-cover rounded-3xl"
-      />
-    </motion.div>
-  </div>
-</motion.div>
-
-
-          {/* Content */}
+        {/* Content */}
+        <div className="flex justify-center">
           <motion.div
-            initial={{ opacity: 0, x: 30 }}
-            whileInView={{ opacity: 1, x: 0 }}
-            transition={{ duration: 1 }}
+            initial={{ opacity: 0, y: 30 }}
+            whileInView={{ opacity: 1, y: 0 }}
+            transition={{ duration: 0.9 }}
             viewport={{ once: true }}
             className="
+              w-full max-w-4xl
               backdrop-blur-xl bg-black/30
-              p-9 rounded-3xl border border-yellow-400/20
+              px-10 py-8
+              rounded-3xl border border-yellow-400/20
             "
           >
             <p
