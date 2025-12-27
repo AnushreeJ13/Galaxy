@@ -1,7 +1,7 @@
 
-export const HERO_CONTENT = `I am an enthusiastic third-year student at Indira Gandhi Delhi Technical University for Women, pursuing B.Tech in Computer Science with a specialization in Artificial Intelligence. Guided by divine creativity, I am passionate about learning and creating innovative solutions.`;
+export const HERO_CONTENT = `I’m a third-year B.Tech student in Computer Science (Artificial Intelligence) at Indira Gandhi Delhi Technical University for Women. I enjoy turning ideas into clean, thoughtful digital experiences and continuously growing as a developer through learning and hands-on building.`;
 
-export const ABOUT_TEXT = `I aspire to become a proficient Full Stack Developer, building seamless and scalable web applications. Currently, I am skilled in HTML, CSS, and DBMS, and I'm familiar with various tools and frameworks. My journey is driven by a commitment to continuous learning and a desire to make a positive impact in the tech field through efficient, user-friendly applications.`;
+export const ABOUT_TEXT = `I’m working towards becoming a Full Stack Developer with a strong interest in building clean, scalable, and user-friendly web applications. I’m gradually expanding my skills by learning modern frameworks and tools. I enjoy solving problems through code and creating digital experiences that feel simple, reliable, and thoughtfully designed.`;
 
 export const EXPERIENCES = [
   {

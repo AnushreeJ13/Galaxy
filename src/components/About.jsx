@@ -86,37 +86,44 @@ and creating products that feel simple, thoughtful, and reliable.
 
         <div className="grid grid-cols-1 lg:grid-cols-2 gap-14 items-center">
           {/* Image */}
-          <motion.div
-            initial={{ opacity: 0, x: -30 }}
-            whileInView={{ opacity: 1, x: 0 }}
-            transition={{ duration: 1 }}
-            viewport={{ once: true }}
-            className="flex justify-center"
-          >
-            <div className="relative w-96 h-96">
-              <motion.div
-                className="absolute inset-0 rounded-3xl overflow-hidden"
-                style={{
-                  transform: `translateY(${mousePosition.y / 40}px)`,
-                }}
-                transition={{ type: "spring", stiffness: 120, damping: 20 }}
-              >
-                <img
-                  src={aboutImage}
-                  alt="About"
-                  className="w-full h-full object-cover rounded-3xl"
-                />
+          {/* Image */}
+<motion.div
+  initial={{ opacity: 0, x: -30 }}
+  whileInView={{ opacity: 1, x: 0 }}
+  transition={{ duration: 1 }}
+  viewport={{ once: true }}
+  className="flex justify-center"
+>
+  <div className="relative w-[380px] h-[380px] flex items-center justify-center">
+    
+    {/* 🌕 Yellow Ring (bigger) */}
+    <div
+      className="
+        absolute
+        w-[380px] h-[380px]
+        rounded-3xl
+        border-[3px] border-yellow-400/60
+        shadow-[0_0_50px_rgba(250,204,21,0.25)]
+      "
+    />
 
-                <div
-                  className="
-                    absolute inset-0 rounded-3xl
-                    border-2 border-yellow-400/40
-                    shadow-[0_0_60px_rgba(250,204,21,0.15)]
-                  "
-                />
-              </motion.div>
-            </div>
-          </motion.div>
+    {/* 🖼 Photo (slightly smaller, on top of ring) */}
+    <motion.div
+      className="relative w-[340px] h-[340px] rounded-3xl overflow-hidden z-10"
+      style={{
+        transform: `translateY(${mousePosition.y / 40}px)`,
+      }}
+      transition={{ type: "spring", stiffness: 120, damping: 20 }}
+    >
+      <img
+        src={aboutImage}
+        alt="About"
+        className="w-full h-full object-cover rounded-3xl"
+      />
+    </motion.div>
+  </div>
+</motion.div>
+
 
           {/* Content */}
           <motion.div

@@ -54,7 +54,7 @@ const Home = () => {
             </h2>
 
             <p className="text-base text-gray-300 leading-relaxed mb-6 italic">
-              “{HERO_CONTENT}”
+              {HERO_CONTENT}
             </p>
 
             <div className="flex gap-4 flex-wrap">
