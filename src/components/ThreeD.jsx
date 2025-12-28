@@ -82,6 +82,44 @@ function generatePlanetTexture(keyOrColor, size = 1024) {
     }
     // subtle noise
     noise(8);
+  } else if (key.includes("mercury")) {
+    // Mercury-like: small grey rocky planet
+    const grd = ctx.createLinearGradient(0, 0, 0, size);
+    grd.addColorStop(0, "#bfc4c8");
+    grd.addColorStop(1, "#8f9498");
+    ctx.fillStyle = grd;
+    ctx.fillRect(0, 0, size, size);
+
+    // small craters
+    ctx.fillStyle = "rgba(0,0,0,0.06)";
+    for (let i = 0; i < 80; i++) {
+      ctx.beginPath();
+      const cx = Math.random() * size;
+      const cy = Math.random() * size;
+      const r = size * (0.005 + Math.random() * 0.02);
+      ctx.ellipse(cx, cy, r * (0.6 + Math.random()), r, Math.random() * Math.PI, 0, Math.PI * 2);
+      ctx.fill();
+    }
+    noise(6);
+  } else if (key.includes("mars")) {
+    // Mars-like: red/orange dusty surface with darker patches
+    const grd = ctx.createLinearGradient(0, 0, 0, size);
+    grd.addColorStop(0, "#ffb48b");
+    grd.addColorStop(1, "#b84b1f");
+    ctx.fillStyle = grd;
+    ctx.fillRect(0, 0, size, size);
+
+    // darker rocky patches
+    ctx.fillStyle = "rgba(80,30,10,0.12)";
+    for (let i = 0; i < 30; i++) {
+      ctx.beginPath();
+      const cx = Math.random() * size;
+      const cy = Math.random() * size;
+      const r = size * (0.02 + Math.random() * 0.06);
+      ctx.ellipse(cx, cy, r * (0.8 + Math.random()), r, Math.random() * Math.PI, 0, Math.PI * 2);
+      ctx.fill();
+    }
+    noise(8);
   } else {
     // fallback: color gradient
     const hex = keyOrColor;
@@ -101,11 +139,13 @@ function generatePlanetTexture(keyOrColor, size = 1024) {
 }
 
 /* ===================== SIMPLE PLANETS CONFIG ===================== */
+// Order planets from the Sun outward among the five present: Venus, Earth, Mars, Jupiter, Saturn
 const PLANETS_CONFIG = [
-  { name: "Earth", id: "earth", type: "earth", color: "#2c6fb8", radius: 18, speed: 0.45, size: 3.6, ring: false, navTarget: "home" },
-  { name: "Venus", id: "venus", type: "venus", color: "#e0b96b", radius: 30, speed: 0.35, size: 3.2, ring: false, navTarget: "education" },
-  { name: "Saturn", id: "saturn", type: "saturn", color: "#d3b37a", radius: 44, speed: 0.27, size: 4.2, ring: true, ringColor: "#e6d7b3", navTarget: "experience" },
-  { name: "Jupiter", id: "jupiter", type: "jupiter", color: "#c18f63", radius: 58, speed: 0.18, size: 3.8, ring: false, navTarget: "about" },
+  { name: "Venus", id: "venus", type: "venus", color: "#e0b96b", radius: 18, speed: 0.42, size: 3.2, ring: false, navTarget: "education" },
+  { name: "Earth", id: "earth", type: "earth", color: "#2c6fb8", radius: 26, speed: 0.45, size: 3.6, ring: false, navTarget: "home" },
+  { name: "Mars", id: "mars", type: "mars", color: "#c1440e", radius: 34, speed: 0.38, size: 3.0, ring: false, navTarget: "contact" },
+  { name: "Jupiter", id: "jupiter", type: "jupiter", color: "#c18f63", radius: 48, speed: 0.18, size: 4.8, ring: false, navTarget: "about" },
+  { name: "Saturn", id: "saturn", type: "saturn", color: "#d3b37a", radius: 62, speed: 0.14, size: 4.2, ring: true, ringColor: "#e6d7b3", navTarget: "experience" },
 ];
 
 /* ===================== BACKGROUND IMAGE CLONES ===================== */
@@ -191,6 +231,59 @@ function Comet() {
   );
 }
 
+/* ===================== SUN (CENTERPIECE) ===================== */
+function Sun() {
+  const ref = useRef();
+  const SUN_SIZE = 6;
+
+  useFrame(({ clock }) => {
+    if (ref.current) ref.current.rotation.y = clock.elapsedTime * 0.08;
+  });
+
+  return (
+    <group ref={ref}>
+      {/* Core sun */}
+      <mesh>
+        <sphereGeometry args={[SUN_SIZE, 64, 64]} />
+        <meshStandardMaterial color="#ffd27a" emissive="#ffd27a" emissiveIntensity={1.2} metalness={0.0} roughness={0.9} />
+      </mesh>
+
+      {/* Layered warm halos using additive sprites for volumetric sun glow */}
+      {(() => {
+        // create a radial gradient texture for glow
+        const canvas = document.createElement("canvas");
+        const size = 256;
+        canvas.width = size;
+        canvas.height = size;
+        const ctx = canvas.getContext("2d");
+        const grd = ctx.createRadialGradient(size / 2, size / 2, 0, size / 2, size / 2, size / 2);
+        grd.addColorStop(0, "rgba(255,235,165,1)");
+        grd.addColorStop(0.25, "rgba(255,185,110,0.85)");
+        grd.addColorStop(0.6, "rgba(255,135,60,0.35)");
+        grd.addColorStop(1, "rgba(255,120,40,0)");
+        ctx.fillStyle = grd;
+        ctx.fillRect(0, 0, size, size);
+        const glowTex = new THREE.CanvasTexture(canvas);
+        glowTex.encoding = THREE.sRGBEncoding;
+
+        return (
+          <>
+            <sprite scale={[SUN_SIZE * 8, SUN_SIZE * 8, 1]}>
+              <spriteMaterial map={glowTex} color="#ffb36b" transparent blending={THREE.AdditiveBlending} depthWrite={false} opacity={0.95} />
+            </sprite>
+            <sprite scale={[SUN_SIZE * 4, SUN_SIZE * 4, 1]}>
+              <spriteMaterial map={glowTex} color="#ffd9a3" transparent blending={THREE.AdditiveBlending} depthWrite={false} opacity={0.7} />
+            </sprite>
+          </>
+        );
+      })()}
+
+      {/* Stronger warm light from the sun */}
+      <pointLight color="#ffd89b" intensity={2.6} distance={600} decay={2} />
+    </group>
+  );
+}
+
 /* ===================== SIMPLE PLANET WITH RING ===================== */
 function SimplePlanet({ planet, onPlanetSelect, onHoverChange }) {
   const groupRef = useRef();
@@ -226,39 +319,45 @@ function SimplePlanet({ planet, onPlanetSelect, onHoverChange }) {
   return (
     <group ref={groupRef}>
       <Float speed={2} rotationIntensity={0.5} floatIntensity={0.5}>
-        {/* Planet */}
-        <mesh
-          ref={planetRef}
-          onClick={() => {
-            // debug: log navigation target when planet clicked
-            // eslint-disable-next-line no-console
-            console.log("Planet click:", planet.id, "navTarget:", planet.navTarget);
-            if (planet.navTarget) {
-              // If parent provided a navigation handler, use it to exit 3D and scroll
-              if (onPlanetSelect) return onPlanetSelect(planet.navTarget);
-              // otherwise, try to find element in DOM (fallback)
-              const el = document.getElementById(planet.navTarget);
-              // eslint-disable-next-line no-console
-              console.log("Fallback target element found:", !!el, planet.navTarget, el);
-              if (el) return el.scrollIntoView({ behavior: "smooth", block: "start" });
-            }
-            if (onPlanetSelect) onPlanetSelect(planet.id);
-          }}
-          onPointerOver={(e) => {
-            setHovered(true);
-            document.body.style.cursor = "pointer";
-            if (onHoverChange) onHoverChange({ id: planet.id, x: e.clientX, y: e.clientY, target: planet.navTarget || null });
-          }}
-          onPointerMove={(e) => {
-            // update position while moving over the planet
-            if (hovered && onHoverChange) onHoverChange({ id: planet.id, x: e.clientX, y: e.clientY, target: planet.navTarget || null });
-          }}
-          onPointerOut={() => {
-            setHovered(false);
-            document.body.style.cursor = "default";
-            if (onHoverChange) onHoverChange(null);
-          }}
-        >
+        {/* Invisible hit-sphere to enlarge hover/click area (2x) */}
+        {(() => {
+          const HIT_MULTIPLIER = 2.0; // double the interactive area
+          return (
+            <mesh
+              onClick={() => {
+                // eslint-disable-next-line no-console
+                console.log("Planet click:", planet.id, "navTarget:", planet.navTarget);
+                if (planet.navTarget) {
+                  if (onPlanetSelect) return onPlanetSelect(planet.navTarget);
+                  const el = document.getElementById(planet.navTarget);
+                  // eslint-disable-next-line no-console
+                  console.log("Fallback target element found:", !!el, planet.navTarget, el);
+                  if (el) return el.scrollIntoView({ behavior: "smooth", block: "start" });
+                }
+                if (onPlanetSelect) onPlanetSelect(planet.id);
+              }}
+              onPointerOver={(e) => {
+                setHovered(true);
+                document.body.style.cursor = "pointer";
+                if (onHoverChange) onHoverChange({ id: planet.id, x: e.clientX, y: e.clientY, target: planet.navTarget || null });
+              }}
+              onPointerMove={(e) => {
+                if (hovered && onHoverChange) onHoverChange({ id: planet.id, x: e.clientX, y: e.clientY, target: planet.navTarget || null });
+              }}
+              onPointerOut={() => {
+                setHovered(false);
+                document.body.style.cursor = "default";
+                if (onHoverChange) onHoverChange(null);
+              }}
+            >
+              <sphereGeometry args={[planet.size * HIT_MULTIPLIER, 32, 32]} />
+              <meshBasicMaterial transparent opacity={0} side={THREE.DoubleSide} />
+            </mesh>
+          );
+        })()}
+
+        {/* Visual planet (separate from hit area) */}
+        <mesh ref={planetRef}>
             <sphereGeometry args={[planet.size, 96, 96]} />
             <meshStandardMaterial
               map={procTexture}
@@ -490,6 +589,9 @@ export default function CleanUniverse({ onExit, onPlanetSelect }) {
           
           {/* Background Images */}
           <BackgroundImageClones />
+
+          {/* Sun (centerpiece) */}
+          <Sun />
 
           {/* Comet */}
           <Comet />
