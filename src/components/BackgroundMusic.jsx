@@ -1,6 +1,6 @@
 import { useEffect, useRef } from "react";
 
-const BackgroundMusic = ({ play }) => {
+const BackgroundMusic = ({ play, volume }) => {
   const audioRef = useRef(null);
   const fadeRef = useRef(null);
 
@@ -10,36 +10,37 @@ const BackgroundMusic = ({ play }) => {
 
     audio.loop = true;
 
+    if (fadeRef.current) {
+      clearInterval(fadeRef.current);
+      fadeRef.current = null;
+    }
+
+    // 🎧 Apply logarithmic perception
+    const targetVolume = volume * volume;
+
     if (play) {
-      audio.volume = 0; // start silent
+      audio.volume = 0;
       audio.play().catch(() => {});
 
       let v = 0;
       fadeRef.current = setInterval(() => {
-        if (v < 0.07) {
-          v += 0.005; // smooth & slow fade
-          audio.volume = v;
+        if (v < targetVolume) {
+          v += 0.01;
+          audio.volume = Math.min(v, targetVolume);
         } else {
-          audio.volume = 0.07; // exact final volume
+          audio.volume = targetVolume;
           clearInterval(fadeRef.current);
         }
-      }, 150);
+      }, 100);
     } else {
       audio.pause();
       audio.currentTime = 0;
-      clearInterval(fadeRef.current);
     }
 
-    return () => clearInterval(fadeRef.current);
-  }, [play]);
+    return () => fadeRef.current && clearInterval(fadeRef.current);
+  }, [play, volume]);
 
-  return (
-    <audio
-      ref={audioRef}
-      src="/flute.mp3"
-      preload="auto"
-    />
-  );
+  return <audio ref={audioRef} src="/flute.mp3" preload="auto" />;
 };
 
 export default BackgroundMusic;
